@@ -147,7 +147,7 @@ function MedicineCard({ med }) {
 // ─── AI DOCTOR CHATBOT ───
 function AiDoctor({ onClose }) {
   const [messages, setMessages] = useState([
-    { role:"assistant", text:"👨‍⚕️ Hello! I'm Dr. RxBot, your AI medical assistant powered by web search.\n\nDescribe your symptoms and I'll suggest appropriate medicines with dosage — just like a doctor would. Remember: always consult a real doctor for serious conditions." }
+    { role:"assistant", text:"👨‍⚕️ Hello! I'm Dr. Dhameja, your AI medical assistant powered by web search.\n\nDescribe your symptoms and I'll suggest appropriate medicines with dosage — just like a doctor would. Remember: always consult a real doctor for serious conditions." }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -163,7 +163,7 @@ function AiDoctor({ onClose }) {
     setLoading(true);
 
     try {
-      const systemPrompt = `You are Dr. RxBot, an experienced general physician AI assistant for Sanjeevni pharmacy.
+      const systemPrompt = `You are Dr. Dhameja, an experienced general physician AI assistant for Sanjeevni pharmacy.
 When a patient describes symptoms, you:
 1. Briefly acknowledge their symptoms with empathy
 2. Suggest 2-4 appropriate medicines with:
@@ -210,7 +210,7 @@ Always mention Indian brand names or generic names common in India. Prices are i
       <div style={{ background:"linear-gradient(135deg,#111827,#1f2937)", padding:"1rem 1.1rem", display:"flex", alignItems:"center", gap:"0.7rem" }}>
         <div style={{ width:38, height:38, background:"#10B981", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"1.2rem", flexShrink:0 }}>👨‍⚕️</div>
         <div style={{ flex:1 }}>
-          <div style={{ color:"#fff", fontWeight:700, fontSize:"0.9rem" }}>Dr. RxBot</div>
+          <div style={{ color:"#fff", fontWeight:700, fontSize:"0.9rem" }}>Dr. Dhameja</div>
           <div style={{ color:"#6ee7b7", fontSize:"0.72rem", display:"flex", alignItems:"center", gap:"0.3rem" }}>
             <span style={{ width:6, height:6, background:"#10B981", borderRadius:"50%", display:"inline-block" }}></span>
             AI Medical Assistant • Web Search Enabled
@@ -260,7 +260,7 @@ function AiDoctorButton({ open, setOpen }) {
   return (
     <button onClick={()=>setOpen(o=>!o)} style={{ position:"fixed", bottom:24, right:24, zIndex:998, background: open?"#374151":"#111827", color:"#fff", border:"none", borderRadius:16, padding:"0.7rem 1.2rem", fontWeight:700, fontSize:"0.875rem", cursor:"pointer", display:"flex", alignItems:"center", gap:"0.5rem", boxShadow:"0 8px 24px rgba(0,0,0,0.2)", transition:"all 0.2s" }}>
       <span style={{ fontSize:"1.1rem" }}>🩺</span>
-      {open ? "Close Dr. RxBot" : "Ask Dr. Dhameja"}
+      {open ? "Close Dr. Dhameja" : "Ask Dr. Dhameja"}
       <span style={{ width:7, height:7, background:"#10B981", borderRadius:"50%", display:"inline-block", boxShadow:"0 0 0 2px rgba(16,185,129,0.3)" }}></span>
     </button>
   );
