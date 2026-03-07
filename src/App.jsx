@@ -177,22 +177,26 @@ When a patient describes symptoms, you:
 Use web search to find the most current and accurate medicine recommendations for the symptoms described.
 Always mention Indian brand names or generic names common in India. Prices are in Indian Rupees (₹).`;
 
-      const response = await fetch(
-  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
+    const response = await fetch(
+  "https://api.groq.com/openai/v1/chat/completions",
   {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`
+    },
     body: JSON.stringify({
-      contents: [{
-        parts: [{ 
-          text: `${systemPrompt}\n\nPatient says: ${userMsg}` 
-        }]
-      }]
+      model: "llama-3.3-70b-versatile",
+      max_tokens: 1000,
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userMsg }
+      ]
     })
   }
 );
 const data = await response.json();
-const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, try again.";
+const text = data.choices?.[0]?.message?.content || "Sorry, try again.";
 setMessages((m) => [...m, { role: "assistant", text }]);
     } catch(e) {
       setMessages(m => [...m, { role:"assistant", text:"⚠️ Connection error. Please check your internet and try again." }]);
