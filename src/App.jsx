@@ -177,25 +177,23 @@ When a patient describes symptoms, you:
 Use web search to find the most current and accurate medicine recommendations for the symptoms described.
 Always mention Indian brand names or generic names common in India. Prices are in Indian Rupees (₹).`;
 
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method:"POST",
-       headers:{ 
-  "Content-Type": "application/json",
-  "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
-  "anthropic-version": "2023-06-01",
-  "anthropic-dangerous-direct-browser-access": "true",
-},
-        body: JSON.stringify({
-          model:"claude-sonnet-4-20250514",
-          max_tokens:1000,
-          system: systemPrompt,
-          tools:[{ type:"web_search_20250305", name:"web_search" }],
-          messages:[{ role:"user", content: userMsg }]
-        })
-      });
-      const data = await response.json();
-      const text = data.content?.filter(b=>b.type==="text").map(b=>b.text).join("\n") || "Sorry, I couldn't process that. Please try again.";
-      setMessages(m => [...m, { role:"assistant", text }]);
+      const response = await fetch(
+  `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [{
+        parts: [{ 
+          text: `${systemPrompt}\n\nPatient says: ${userMsg}` 
+        }]
+      }]
+    })
+  }
+);
+const data = await response.json();
+const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, try again.";
+setMessages((m) => [...m, { role: "assistant", text }]);
     } catch(e) {
       setMessages(m => [...m, { role:"assistant", text:"⚠️ Connection error. Please check your internet and try again." }]);
     }
